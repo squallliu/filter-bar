@@ -1,0 +1,85 @@
+.filter-bar-backdrop {
+  -webkit-transition: opacity 150ms ease-in-out;
+  transition: opacity 150ms ease-in-out;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.filter-bar-backdrop.active {
+  z-index: 10;
+  opacity: 1;
+}
+
+.filter-bar {
+  position: fixed;
+  width: 100%;
+  height: 44px;
+  z-index: 10;
+}
+
+.filter-bar .filter-bar-wrapper {
+  z-index: 11;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+}
+
+.filter-bar .filter-bar-wrapper .item-input-inset .icon.placeholder-icon:before {
+  padding-top: 3px;
+  font-size: 16px;
+}
+
+.filter-bar .filter-bar-wrapper .item-input-inset .item-input-wrapper {
+  background: #fff;
+  height: 28px;
+}
+
+.filter-bar .filter-bar-wrapper .item-input-inset .item-input-wrapper .filter-bar-clear {
+  padding: 0 2px 0 0;
+}
+
+.filter-bar .filter-bar-wrapper .item-input-inset .item-input-wrapper .filter-bar-clear:before {
+  color: #aaa;
+  font-size: 18px;
+  padding-top: 1px;
+}
+
+.filter-bar-wrapper .item-input-inset .filter-bar-cancel {
+  padding-left: 0;
+}
+
+.filter-bar-transition-horizontal {
+  -webkit-transition: -webkit-transform cubic-bezier(.25, .45, .05, 1) 300ms;
+  transition: transform cubic-bezier(.25, .45, .05, 1) 300ms;
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+}
+
+.filter-bar-transition-vertical {
+  -webkit-transition: -webkit-transform cubic-bezier(.25, .45, .05, 1) 350ms;
+  transition: transform cubic-bezier(.25, .45, .05, 1) 350ms;
+  -webkit-transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, -100%, 0);
+}
+
+.filter-bar-transition-fade {
+  -webkit-transition: opacity 250ms ease-in-out;
+  transition: opacity 250ms ease-in-out;
+  opacity: 0;
+}
+
+.filter-bar-in {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+}
+
+.filter-bar-element-hide {
+  display: none;
+}
