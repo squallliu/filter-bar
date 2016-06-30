@@ -327,6 +327,7 @@ angular.module('whcyit-filter-bar', ['ionic']);
             if (scope.histories.length > scope.historyMax) {
               scope.histories = scope.histories.slice(0, scope.historyMax);
             }
+            scope.$apply();
           }
         };
 
