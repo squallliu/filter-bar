@@ -1,4 +1,4 @@
-angular.module('starter.controllers', []).controller('HomeCtrl', function ($scope, cyOpenWindow, $state) {
+angular.module('starter.controllers', []).controller('HomeCtrl', function ($scope, $state) {
   $scope.doRemoteSearch = function () {
     $state.go('search-demo-remote');
   };
