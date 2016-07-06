@@ -21,9 +21,11 @@ angular.module('whcyit-filter-bar', ['ionic']);
     var historyTemplate =
       '<ion-content class="has-header">' +
         '<ion-list>' +
-          '<ion-item ng-repeat="key in histories" class="item-remove-animate" ng-click="searchFromHistory(key)">' +
+          '<ion-item ng-repeat="key in histories" class="item-button-right" ng-click="searchFromHistory(key)">' +
             '{{::key}}' +
-            '<ion-option-button class="button-assertive icon {{::config.remove}}" ng-click="deleteItem(key)"></ion-option-button>' +
+            '<button class="button button-clear" ng-click="deleteItem(key)">' +
+              '<i class="icon {{::config.remove}} dark"></i>' +
+            '</button>' +
           '</ion-item>' +
         '</ion-list>' +
       '</ion-content>';    
@@ -170,7 +172,7 @@ angular.module('whcyit-filter-bar', ['ionic']);
     var configProperties = {
       theme: null,
       clear: ionic.Platform.isAndroid() ? 'ion-android-close' : 'ion-ios-close',
-      remove: 'ion-ios-trash-outline',
+      remove: 'ion-ios-close-empty',
       search: ionic.Platform.isAndroid() ? 'ion-android-search' : 'ion-ios-search-strong',
       transition: ionic.Platform.isAndroid() ? 'horizontal' : 'vertical',
       placeholder: '请输入查询关键字'
@@ -419,11 +421,12 @@ angular.module('whcyit-filter-bar', ['ionic']);
         // Filtered items will be sent to update
         scope.filterItems = function (filterText) {
           var filterExp, filteredItems;
+          var items = scope.items;
 
           // pass back original list if filterText is empty.
           // Otherwise filter by expression, supplied properties, or filterText.
           if (!filterText.length) {
-            filteredItems = scope.items;
+            filteredItems = items;
           } else {
             if (scope.expression) {
               filterExp = angular.bind(this, scope.expression, filterText);
@@ -439,7 +442,7 @@ angular.module('whcyit-filter-bar', ['ionic']);
               filterExp = filterText;
             }
 
-            filteredItems = scope.filter(scope.items, filterExp, scope.comparator);
+            filteredItems = scope.filter(items, filterExp, scope.comparator);
           }
 
           $timeout(function () {
