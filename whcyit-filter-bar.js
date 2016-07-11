@@ -14,7 +14,7 @@ angular.module('whcyit-filter-bar', ['ionic']);
             '<input type="text" class="filter-bar-search" ng-model="data.filterText" placeholder="{{::config.placeholder}}" />' +
             '<button class="filter-bar-clear button button-icon icon" ng-class="getClearButtonClass()"></button>' +
           '</label>' +
-          '<button class="online-search button button-clear" style="padding-left: 0px; margin-left: 5px;" ng-show="!localSearch">搜索</button>' +
+          '<button class="button button-clear" ng-click="filterIt()" style="padding-left: 0px; margin-left: 5px;" ng-show="!localSearch">搜索</button>' +
         '</div>' +
       '</div>';
     
@@ -27,6 +27,7 @@ angular.module('whcyit-filter-bar', ['ionic']);
               '<i class="icon {{::config.remove}} dark"></i>' +
             '</button>' +
           '</ion-item>' +
+          '<ion-item style="text-align: center;" ng-show="histories.length > 0" ng-click="clearHistoies()">清空历史</ion-item>' +
         '</ion-list>' +
       '</ion-content>';    
 
@@ -115,10 +116,9 @@ angular.module('whcyit-filter-bar', ['ionic']);
           var historyEl = $compile(historyTemplate)($scope);
           backdrop.append(historyEl[0]);
 
-          var searchEl = el.querySelector('.online-search');
-          searchEl.addEventListener('click', function () {
+          $scope.filterIt = function () {
             $scope.doSearch($scope.data.filterText);
-          });
+          };
 
           $scope.searchFromHistory = function (key) {
             $scope.data.filterText = key;
@@ -311,12 +311,16 @@ angular.module('whcyit-filter-bar', ['ionic']);
           cancelOnStateChange: true,
           localSearch: false,
           container: $body,
-          historyMax: 10,
+          historyMax: 5,
           historyKey: 'whcyit_filter_bar_histories'
         }, opts);
 
         scope.data = {filterText: ''};
         scope.histories = angular.fromJson($window.localStorage.getItem(scope.historyKey)) || [];
+        
+        scope.clearHistoies = function () {
+          scope.histories = [];
+        };
 
         scope.deleteItem = function(item) {
           var index = scope.histories.indexOf(item);
@@ -324,13 +328,21 @@ angular.module('whcyit-filter-bar', ['ionic']);
         };
 
         scope.addItem = function (key) {
-          if (key && scope.histories.indexOf(key) == -1) {
-            scope.histories = [key].concat(scope.histories);
-            if (scope.histories.length > scope.historyMax) {
-              scope.histories = scope.histories.slice(0, scope.historyMax);
-            }
-            scope.$apply();
+          if (!key) {
+            return;
           }
+
+          var idx = scope.histories.indexOf(key);
+
+          if (idx == -1) {
+            if (scope.histories.length == scope.historyMax) {
+              scope.histories = scope.histories.slice(0, scope.historyMax - 1);
+            }
+          } else {
+            scope.histories.splice(idx, 1);
+          }
+
+          scope.histories = [key].concat(scope.histories);
         };
 
         //if no custom theme was configured, get theme of containers bar-header
