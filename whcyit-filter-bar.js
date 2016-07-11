@@ -367,7 +367,9 @@ angular.module('whcyit-filter-bar', ['ionic']);
         var showKeyboard = function () {
           if (!isKeyboardShown) {
             isKeyboardShown = true;
-            input && input.focus();
+            $timeout(function () {
+              input && input.focus();
+            }, 500, false);
           }
         };
 
