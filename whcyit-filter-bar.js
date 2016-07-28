@@ -354,6 +354,8 @@ angular.module('whcyit-filter-bar', ['ionic']);
           scope.config.placeholder = opts.placeholder;
         }
 
+        var isImmerse = document.body.querySelector('.status-bar') ? true : false;
+
         // Compile the template
         var element = scope.element = $compile('<ion-filter-bar class="filter-bar"></ion-filter-bar>')(scope);
 
@@ -361,6 +363,13 @@ angular.module('whcyit-filter-bar', ['ionic']);
         var filterWrapperEl = element.children().eq(0);
         var input = filterWrapperEl.find('input')[0];
         var backdropEl = element.children().eq(1);
+
+        if (isImmerse && ImmersePlugin) {
+          ImmersePlugin.getStatusbarHeight(function (r) {
+            element.css({"top": r.statusbarHeight + 'px'});
+            backdropEl.css({"top": r.statusbarHeight + 'px'});
+          });
+        }
 
         //get scrollView
         var scrollView = scope.scrollDelegate.getScrollView();
