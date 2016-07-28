@@ -354,7 +354,7 @@ angular.module('whcyit-filter-bar', ['ionic']);
           scope.config.placeholder = opts.placeholder;
         }
 
-        var isImmerse = document.body.querySelector('.status-bar') ? true : false;
+        var isImmerse = document.body.querySelector('.immerse-status-bar') ? true : false;
 
         // Compile the template
         var element = scope.element = $compile('<ion-filter-bar class="filter-bar"></ion-filter-bar>')(scope);
